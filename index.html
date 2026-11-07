@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f4f3ef">
+  <meta name="description" content="CINEVERSE — discover films, build your watchlist and share your reviews.">
+  <title>CINEVERSE — Discover films</title>
+  <link rel="preconnect" href="https://image.tmdb.org">
+  <link rel="preconnect" href="https://api.themoviedb.org">
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="config.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body>
+  <div class="announcement"><span class="status-dot"></span> A personal movie discovery project <span class="announcement-right">INDEPENDENTLY CURATED · 2026</span></div>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="Cineverse home">CINE<span>VERSE</span><i>.</i></a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="#home" data-nav="home">Discover</a>
+      <a href="#explore" data-nav="explore">Explore</a>
+      <a href="#watchlist" data-nav="watchlist">Watchlist</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-button" id="search-open" aria-label="Search movies" title="Search"><span class="search-glyph"></span></button>
+      <div id="account-area"></div>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Open menu">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="home-view" class="view active">
+      <section class="hero-wrap">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-line"></span> THE ART OF FINDING YOUR NEXT FILM</p>
+          <h1>Stories worth<br><em>staying up for.</em></h1>
+          <p class="hero-description">A considered space to discover films, keep the ones you love close, and find your next favourite story.</p>
+          <div class="hero-actions">
+            <a class="button button-dark" href="#explore">Explore films <span>↗</span></a>
+            <a class="text-link" href="#watchlist">Your watchlist <span>→</span></a>
+          </div>
+          <div class="hero-footnote"><span>01 — DISCOVER</span><span>MADE FOR FILM LOVERS</span></div>
+        </div>
+        <div class="hero-art" id="hero-art">
+          <div class="hero-art-top"><span>FEATURED COLLECTION</span><span>NO. 001</span></div>
+          <div class="hero-poster-stack" id="hero-poster-stack">
+            <div class="poster-placeholder"><span>YOUR NEXT<br>FAVOURITE<br>FILM.</span></div>
+          </div>
+          <div class="hero-art-bottom"><span>THE CINEMA IS YOURS.</span><span>✳</span></div>
+        </div>
+      </section>
+      <section class="content-section" id="trending-section">
+        <div class="section-heading">
+          <div><p class="eyebrow">WHAT'S GETTING ATTENTION</p><h2>Trending <em>now.</em></h2></div>
+          <a href="#explore" class="text-link">View all films <span>→</span></a>
+        </div>
+        <div class="movie-grid movie-grid-featured" id="trending-grid"><div class="loading-state">Loading films<span class="loading-dots">...</span></div></div>
+      </section>
+      <section class="content-section soft-section">
+        <div class="section-heading">
+          <div><p class="eyebrow">THE CROWD FAVOURITES</p><h2>Popular <em>picks.</em></h2></div>
+          <span class="section-index">02 / COLLECTION</span>
+        </div>
+        <div class="movie-grid" id="popular-grid"><div class="loading-state">Finding popular films...</div></div>
+      </section>
+      <section class="content-section">
+        <div class="section-heading">
+          <div><p class="eyebrow">TIMELESS BY DESIGN</p><h2>Top <em>rated.</em></h2></div>
+          <span class="section-index">03 / COLLECTION</span>
+        </div>
+        <div class="movie-grid" id="top-grid"><div class="loading-state">Gathering the classics...</div></div>
+      </section>
+      <section class="quote-band">
+        <span class="quote-mark">“</span>
+        <p>Every film is a door.<br><em>Find the one you want to open.</em></p>
+        <span class="quote-credit">CINEVERSE / FIELD NOTE 001</span>
+      </section>
+    </section>
+
+    <section id="explore-view" class="view page-view">
+      <div class="page-intro">
+        <p class="eyebrow">YOUR NEXT STORY STARTS HERE</p>
+        <h1>Explore <em>films.</em></h1>
+        <p>Search the catalogue, follow a genre, or simply see where the evening takes you.</p>
+      </div>
+      <div class="explore-toolbar">
+        <label class="search-field"><span class="search-glyph"></span><input id="explore-search" type="search" placeholder="Search titles, e.g. Interstellar..." autocomplete="off"><kbd>ENTER</kbd></label>
+        <select id="genre-filter" aria-label="Filter by genre"><option value="">All genres</option></select>
+        <select id="sort-filter" aria-label="Sort movies"><option value="popular">Popular</option><option value="rating">Highest rated</option><option value="newest">Newest</option></select>
+      </div>
+      <div class="result-meta"><span id="explore-label">POPULAR DISCOVERIES</span><span id="result-count"></span></div>
+      <div class="movie-grid" id="explore-grid"><div class="loading-state">Loading catalogue...</div></div>
+      <div class="load-more-wrap"><button class="button button-outline" id="load-more">Load more films <span>＋</span></button></div>
+    </section>
+
+    <section id="watchlist-view" class="view page-view">
+      <div class="page-intro">
+        <p class="eyebrow">A LITTLE COLLECTION OF YOUR OWN</p>
+        <h1>Your <em>watchlist.</em></h1>
+        <p>Keep the films you want to come back to, all in one place.</p>
+      </div>
+      <div class="result-meta"><span>YOUR SAVED FILMS</span><span id="watchlist-count">0 SAVED</span></div>
+      <div class="movie-grid" id="watchlist-grid"></div>
+    </section>
+
+    <section id="profile-view" class="view page-view">
+      <div class="page-intro">
+        <p class="eyebrow">YOUR SPACE IN CINEVERSE</p>
+        <h1>Personal <em>archive.</em></h1>
+        <p>A small record of what you've saved and what you've thought.</p>
+      </div>
+      <div id="profile-content"></div>
+    </section>
+
+    <section id="auth-view" class="view auth-view">
+      <div class="auth-panel">
+        <p class="eyebrow">GOOD TO HAVE YOU HERE</p>
+        <h1 id="auth-title">Welcome <em>back.</em></h1>
+        <p class="auth-subtitle" id="auth-subtitle">Sign in to keep your film collection close.</p>
+        <form id="auth-form">
+          <div class="form-field" id="name-field" hidden><label for="auth-name">YOUR NAME</label><input id="auth-name" type="text" placeholder="Your name" autocomplete="name"></div>
+          <div class="form-field"><label for="auth-email">EMAIL ADDRESS</label><input id="auth-email" type="email" placeholder="you@example.com" autocomplete="email" required></div>
+          <div class="form-field"><label for="auth-password">PASSWORD</label><input id="auth-password" type="password" placeholder="At least 6 characters" autocomplete="current-password" required minlength="6"></div>
+          <p class="form-error" id="auth-error" role="alert"></p>
+          <button class="button button-dark button-full" id="auth-submit" type="submit">Sign in <span>↗</span></button>
+        </form>
+        <p class="auth-switch" id="auth-switch">New to Cineverse? <button type="button" id="auth-switch-button">Create an account</button></p>
+        <div class="demo-box"><span class="demo-label">DEMO ACCOUNT</span><p>admin@cineverse.com</p><p>Admin@12345</p><button type="button" id="demo-login">Use demo account <span>→</span></button></div>
+        <p class="auth-note">This GitHub Pages edition stores accounts and activity in this browser only. See README for the limitation.</p>
+      </div>
+      <div class="auth-side"><span>THE FILM JOURNAL</span><strong>Discover.<br>Save.<br><em>Remember.</em></strong><small>CINEVERSE — AN INDEPENDENT PROJECT</small></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand" href="#home">CINE<span>VERSE</span><i>.</i></a>
+    <p>A small corner of the internet for people who love films.</p>
+    <div class="footer-right"><span>POWERED BY TMDB</span><span>BUILT WITH CURIOSITY · 2026</span></div>
+  </footer>
+
+  <div class="modal-backdrop" id="movie-modal" aria-hidden="true">
+    <div class="movie-modal" role="dialog" aria-modal="true" aria-label="Movie details">
+      <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+      <div id="movie-modal-content"></div>
+    </div>
+  </div>
+  <div class="modal-backdrop" id="review-modal" aria-hidden="true">
+    <div class="review-dialog" role="dialog" aria-modal="true" aria-label="Write a review">
+      <button class="modal-close" id="review-close" aria-label="Close">×</button>
+      <p class="eyebrow">YOUR TAKE</p><h2>Write a <em>review.</em></h2>
+      <form id="review-form">
+        <input type="hidden" id="review-movie-id">
+        <label for="review-rating">YOUR RATING</label>
+        <select id="review-rating"><option value="5">5 — Excellent</option><option value="4">4 — Really good</option><option value="3">3 — Good</option><option value="2">2 — Not for me</option><option value="1">1 — Disappointing</option></select>
+        <label for="review-text">YOUR REVIEW</label>
+        <textarea id="review-text" rows="5" maxlength="700" placeholder="What stayed with you after the credits?" required></textarea>
+        <button class="button button-dark button-full" type="submit">Publish review <span>↗</span></button>
+      </form>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <div class="search-overlay" id="search-overlay" aria-hidden="true">
+    <div class="search-overlay-inner"><button class="modal-close" id="search-close" aria-label="Close">×</button><p class="eyebrow">FIND YOUR NEXT FILM</p><label class="search-field search-field-large"><span class="search-glyph"></span><input id="global-search" type="search" placeholder="Search for a film..."></label><p class="search-hint">PRESS ENTER TO EXPLORE RESULTS</p></div>
+  </div>
+</body>
+</html>
